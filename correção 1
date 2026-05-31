@@ -1,0 +1,6 @@
+- name: ⚙️ Build
+        run: |
+          echo "Verificando arquivos..."
+          ls src/
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
