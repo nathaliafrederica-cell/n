@@ -37,7 +37,7 @@ jobs:
             detect \
             --source="/repo" \
             --no-git \
-            --config="/repo/.giteaks.toml" \
+            --config="/repo/.gitleaks.toml" \
             --report-format=sarif \
             --report-path="/repo/gitleaks-report.sarif" \
             --redact \
