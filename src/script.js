@@ -1,4 +1,4 @@
-const API_KEY = "VALOR_API";
+const API_KEY = process.env.API_KEY;
 const DB_PASSWORD = "SENHA_BANCO_DE_DADOS";
 
 fetch('db.json')
