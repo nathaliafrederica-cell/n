@@ -1,0 +1,2 @@
+it commit --allow-empty -m "fix: corrigido vazamento de credenciais - executar pipeline"
+git push
