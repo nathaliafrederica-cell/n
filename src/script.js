@@ -4,19 +4,19 @@ const DB_PASSWORD = process.env.DB_PASSWORD || "";
 fetch('db.json')
     .then(response => response.json())
     .then(data => {
-        document.getElementById('db-status').innerText = data.status;
+        document.getElementById('db-status').innerHTML = data.status;
 
         const list = document.getElementById('task-list');
         data.itens.forEach(item => {
             let li = document.createElement('li');
             // Usando innerText em vez de innerHTML para evitar XSS
-            li.innerText = item.task;
+            li.innerHTML = item.task;
             list.appendChild(li);
         });
     })
     .catch(() => {
         // Mensagem genérica sem expor detalhes internos
-        document.getElementById('db-status').innerText =
+        document.getElementById('db-status').innerHTML =
             '❌ Erro ao conectar. Tente novamente.';
     });
 
@@ -26,7 +26,7 @@ function addTask() {
 
     if (!input.value.trim()) return;
 
-    // Usando createElement + innerText sem XSS
+    // Usando createElement + innerHTML sem XSS
     const li = document.createElement('li');
     li.innerText = input.value;
     list.appendChild(li);
