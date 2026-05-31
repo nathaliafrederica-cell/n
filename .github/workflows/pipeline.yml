@@ -29,26 +29,36 @@ jobs:
           ls src/
           echo "Build OK!"
 
-      # ❌ PASSO 3: IMPLEMENTE AQUI — Secrets Scanning com Gitleaks
-      # Dica: use a action oficial "gitleaks/gitleaks-action@v2"
-      - name: 🔑 Secrets Scanning
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
+ # PASSO 3 — Secrets Scanning (Gitleaks) — quebra se achar credencial
+      - name: 🔑 Secrets Scanning - Gitleaks
+        run: |
+          docker run --rm -v "${{ github.workspace }}:/repo" zricethezav/gitleaks:latest \
+            detect \
+            --source="/repo" \
+            --no-git \
+            --config="/repo/.gitleaks.toml" \
+            --report-format=sarif \
+            --report-path="/repo/gitleaks-report.sarif" \
+            --redact \
+            --verbose
 
-      # ❌ PASSO 4: IMPLEMENTE AQUI — SAST com Semgrep
-      # Dica: instale com "pip install semgrep" e rode "semgrep scan --config auto --error src/"
+      # Publica o relatório do Gitleaks como artefato (mesmo se quebrar)
+      - name: 📄 Upload do relatório do Gitleaks
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gitleaks-report
+          path: gitleaks-report.sarif
+          if-no-files-found: ignore
+
+      # PASSO 4 — SAST (Semgrep) — analisa o código-fonte
       - name: 🔍 SAST - Semgrep
         run: |
           pip install semgrep --quiet
           semgrep scan --config auto --error src/
-        
 
-      # ❌ PASSO 5: IMPLEMENTE AQUI — SCA com Grype
-      # Dica: instale com "curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin"
-      # e rode "grype dir:. --fail-on medium"
-      - name: 📦 SCA - Grype§
+      # PASSO 5 — SCA (Grype) — analisa as dependências
+      - name: 📦 SCA - Grype
         run: |
           curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
           grype dir:. --fail-on medium
