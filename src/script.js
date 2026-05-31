@@ -1,5 +1,5 @@
-const API_KEY = process.env.API_KEY;
-const DB_PASSWORD = process.env.DB_PASSWORD;
+const API_KEY = process.env.API_KEY || "";
+const DB_PASSWORD = process.env.DB_PASSWORD || "";
 
 // Then create a .env file (add to .gitignore):
 // API_KEY=your_actual_key_here
