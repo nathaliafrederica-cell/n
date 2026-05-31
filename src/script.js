@@ -9,13 +9,13 @@ fetch('db.json')
         const list = document.getElementById('task-list');
         data.itens.forEach(item => {
             let li = document.createElement('li');
-            // CORREÇÃO 3: innerText em vez de innerHTML (evita XSS)
+            // Usando innerText em vez de innerHTML para evitar XSS
             li.innerText = item.task;
             list.appendChild(li);
         });
     })
     .catch(() => {
-        // CORREÇÃO 2: Mensagem genérica sem expor detalhes internos
+        // Mensagem genérica sem expor detalhes internos
         document.getElementById('db-status').innerText =
             '❌ Erro ao conectar. Tente novamente.';
     });
@@ -26,12 +26,11 @@ function addTask() {
 
     if (!input.value.trim()) return;
 
-    // CORREÇÃO 3: Usando createElement + innerText (sem innerHTML, sem XSS)
+    // Usando createElement + innerText sem XSS
     const li = document.createElement('li');
     li.innerText = input.value;
     list.appendChild(li);
 
-    // CORREÇÃO 4: eval() removido completamente
     console.log('Tarefa adicionada.');
 
     input.value = '';
