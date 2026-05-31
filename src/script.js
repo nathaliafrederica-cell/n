@@ -1,10 +1,6 @@
 const API_KEY = process.env.API_KEY || "";
 const DB_PASSWORD = process.env.DB_PASSWORD || "";
 
-// Then create a .env file (add to .gitignore):
-// API_KEY=your_actual_key_here
-// DB_PASSWORD=your_actual_password_here
-
 fetch('db.json')
     .then(response => response.json())
     .then(data => {
