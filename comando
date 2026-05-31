@@ -1,3 +1,13 @@
+#!/bin/bash
+set -euo pipefail
+
+echo "📝 Staging changes..."
 git add .
+
+echo "💾 Committing changes..."
 git commit -m "feat: adicionando gitleaks e atualizando esteira devsecops"
+
+echo "🚀 Pushing to origin/main..."
 git push origin main
+
+echo "✅ Done!"
