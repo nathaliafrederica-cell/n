@@ -1,5 +1,11 @@
 const API_KEY = process.env.API_KEY || "";
-const DB_PASSWORD = process.env.DB_PASSWORD || "";
+const DB_PASSWORD = process.env.DB_PASSWORD || ;
+// Verifica se a variável existe. Se não existir, interrompe o código imediatamente.
+if (!process.env.DB_PASSWORD) {
+  throw new Error("❌ ERRO CRÍTICO: A variável de ambiente DB_PASSWORD não foi definida!");
+}
+
+const DB_PASSWORD = process.env.DB_PASSWORD;
 
 fetch('db.json')
     .then(response => response.json())
